@@ -2,7 +2,7 @@
 #include <iostream>
 #include <time.h>
 #include <math.h>
-#include "Header.h"
+#include "Header1.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ int main() {
 	float* mas = new float[n];
 	mas = masssiv(n);
 	pechat(mas, n);
-	raplace(mas, n);
+	replace(mas, n);
 	pechat(mas, n);
 	delete[] mas;
 	return 0;
