@@ -7,12 +7,12 @@
 using namespace std;
 
 int main() {
-	int n = vvod();
+	int n = vvod1();
 	float* mas = new float[n];
-	mas = masssiv(n);
-	pechat(mas, n);
-	replace(mas, n);
-	pechat(mas, n);
+	mas = masssiv1(n);
+	pechat1(mas, n);
+	replace1(mas, n);
+	pechat1(mas, n);
 	delete[] mas;
 	return 0;
 }

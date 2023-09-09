@@ -34,7 +34,7 @@ void pechat(float* a, int n) {
 
 int vvod() {
 	int n;
-	cout << "enter cout of number"<< endl;
+	cout << "enter cout of number(0.1)"<< endl;
 	cin >> n;
 	cout << endl;
 	return n;
