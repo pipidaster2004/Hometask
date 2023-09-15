@@ -42,15 +42,11 @@ int vvod1() {
 float* replace1(float* a, int n) {
 	if (n % 2 != 0)
 		return NULL;
-	float* b = new float[n / 2];
-	for (int i = 0; i < (n / 2); i++) {
-		b[i] = a[i];
-	}
-	for (int i = 0; i < (n / 2); i++) {
+	float tmp;
+	for (int i = 0; i < n / 2; i++) {
+		tmp = a[i];
 		a[i] = a[i + n / 2];
-	}
-	for (int i = n / 2; i < n; i++) {
-		a[i] = b[i - n/2];
+		a[i + n / 2] = tmp;
 	}
 	return a;
 }

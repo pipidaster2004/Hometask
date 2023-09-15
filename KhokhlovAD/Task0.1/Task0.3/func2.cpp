@@ -30,31 +30,31 @@ void pechat2(int* a, int n) {
 	cout << endl;
 }
 
-void replace2(int*& a, int& z) {
-	int n = z;
+void replace2(int* a, int*& b, int z, int& k) {
 	int cnt = 0;
-	for (int m = 0; m < n; m++) {
-		for (int i = m + 1; i < n; i++) {
+	for (int m = 0; m < z; m++) {
+		for (int i = m - 1; i >=0; i--) {
 			if (a[m] == a[i]) {
-				for (int k = i; k < n - 1; k++) {
-					a[k] = a[k + 1];
-				}
-				n--;
 				cnt++;
-
-
+				break;
 			}
+			
 		}
 	}
-	int* mas = new int[z - cnt];
-	for (int i = 0; i < z - cnt; i++) {
-		mas[i] = a[i];
+	k =z - cnt;
+	cout << k <<  endl << endl;
+	b = new int[k];
+	cnt = 0;
+	b[cnt++] = a[cnt];
+	for (int i = 1; i < z; i++) {
+		int flag = 0;
+		for (int j = i - 1; j >= 0; j--) {
+			if (a[i] == b[j]) {
+				flag++;
+				break;
+			}
+		}
+		if (flag == 0)
+			b[cnt++] = a[i];
 	}
-	z = z - cnt;
-	delete[] a;
-	a = new int[z];
-	for (int i = 0; i < z; i++) {
-		a[i] = mas[i];
-	}
-	delete[] mas;
 }

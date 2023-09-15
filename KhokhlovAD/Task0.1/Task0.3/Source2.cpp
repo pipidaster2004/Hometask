@@ -7,12 +7,15 @@
 using namespace std;
 
 int main() {
-	int n = vvod2();
-	int* mas = new int[n];
-	mas = masssiv2(n);
-	pechat2(mas, n);
-	replace2(mas, n);
-	pechat2(mas, n);
+	int newMasLen = 0;
+	int masLen = vvod2();
+	int* mas = new int[masLen];
+	int* newMas;
+	mas = masssiv2(masLen);
+	pechat2(mas, masLen);
+	replace2(mas, newMas, masLen, newMasLen);
+	pechat2(newMas, newMasLen);
 	delete[] mas;
+	delete[] newMas;
 	return 0;
 }
