@@ -23,11 +23,11 @@ TVector::TVector(const TVector& vec) {
 }
 
 
-float TVector::Lenght() {
+float TVector::Lenght()const {
 	return sqrt(x * x + y* y + z * z);
 }
 
-float TVector::Cosin(TVector vec) {
+float TVector::Cosin(const TVector& vec) {
 	return (x * vec.x + y * vec.y + z * vec.z) / (Lenght() * vec.Lenght());
 }
 

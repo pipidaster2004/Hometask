@@ -12,8 +12,8 @@ public:
 	TVector(float x, float y, float z);
 	TVector(const TVector& vec);
 
-	float Lenght();
-	float Cosin(TVector vec);
+	float Lenght()const;
+	float Cosin(const TVector& vec);
 
 	const TVector& operator=(const TVector& vec);
 	TVector operator+(const TVector& vec);

@@ -3,8 +3,8 @@
 #include "Vector.h"
 
 int main() {
-	TVector vec(1.1f,2.1f,3.1f);
-	TVector vec2(4.1f,4.1f,4.1f);
+	TVector vec(1,1,1);
+	TVector vec2(0,1,1);
 	std::cout <<"lenght="<< vec.Lenght() << std::endl;
 	std::cout <<"cosin="<< vec.Cosin(vec2) << std::endl;
 	std::cout << vec;
@@ -14,6 +14,7 @@ int main() {
 	std::cout << vec2;
 	std::cout << vec;
 	vec = vec - vec2;
+	vec = vec + vec2;
 	std::cout << vec;
 	vec = vec2;
 	std::cout << vec;
