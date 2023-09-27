@@ -21,7 +21,7 @@ public:
 	bool operator==(const Vector<T>& obj)const;
 	bool operator!=(const Vector<T>& obj)const;
 	Vector<T>& operator=(const Vector<T>& obj);
-	friend std::istream& operator>>(std::istream& in, Vector<T> vec);
+	friend std::istream& operator>>(std::istream& in, Vector<T>& vec);
 	friend std::ostream& operator<<(std::ostream& out,const Vector<T> vec);
 };
 
@@ -126,15 +126,15 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& obj) {
 
 
 template <class T>
-std::istream& operator>>(std::istream& in, Vector<T> vec) {
-	std::cout << "size = ";
+std::istream& operator>>(std::istream& in, Vector<T>& vec) {
+	//std::cout << "size = ";
 	in >> vec.size;
-	std::cout << std::endl;
+	//std::cout << std::endl;
 	vec.vec = new T[vec.size];
 	for (int i = 0; i < vec.size; i++) {
-		std::cout << "vec[" << i << "] = ";
+		//std::cout << "vec[" << i << "] = ";
 		in >> vec.vec[i];
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
 	return in;
 }

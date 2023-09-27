@@ -7,9 +7,19 @@
 using namespace std;
 
 struct FIO {
+	//char name[256];
+	//char surname[256];
+	//char patronimic[256];
 	string name;
 	string surname;
 	string patronimic;
+	friend std::istream& operator>>(std::istream& in, FIO& fio)
+	{
+		in >> fio.name;
+		in >> fio.surname;
+		in >> fio.patronimic;
+		return in;
+	};
 };
 
 struct BD {
@@ -37,13 +47,13 @@ public:
 
 	~Group();
 
-	void AddStudent(Student nSt);
-	void DelStudent(Student St);
+	void AddStudent(const Student& nSt);
+	void DelStudent(const Student& St);
 	void DelStudent(int ind);
 
-	int SearchStudent(FIO st);
-	int SearchStudent(BD st);
-	int SearchStudent(unsigned long phNumber);
+	int SearchStudent(const FIO& st);
+	int SearchStudent(const BD& st);
+	int SearchStudent(const unsigned long phNumber);
 
 	int GetCount()const { return count; };
 

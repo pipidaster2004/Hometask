@@ -4,8 +4,8 @@
 using namespace std;
 
 Group::Group() {
-	gruppa = (Student*)malloc(sizeof(Student));
-	count = 1;
+	gruppa = nullptr;
+	count = 0;
 }
 
 Group::Group(int nCnt) {
@@ -50,12 +50,15 @@ const Student& Student::operator=(const Student& nSt) {
 	data.month = nSt.data.month;
 	data.year = nSt.data.year;
 	name.name = nSt.name.name;
+	//memcpy(name.name, nSt.name.name, 256);
+	//memcpy(name.surname, nSt.name.surname, 256);
+	//memcpy(name.patronimic, nSt.name.patronimic, 256);
 	name.surname = nSt.name.surname;
 	name.patronimic = nSt.name.patronimic;
 	return  (*this);
 }
 
-int Group::SearchStudent(FIO st) {
+int Group::SearchStudent(const FIO& st) {
 	for (int i = 0; i < count; i++)
 		if ((gruppa[i].name.name == st.name) && (gruppa[i].name.name == st.surname) && (gruppa[i].name.patronimic == st.patronimic))
 			return i;
@@ -63,7 +66,7 @@ int Group::SearchStudent(FIO st) {
 	return -1;
 }
 
-int Group::SearchStudent(BD st) {
+int Group::SearchStudent(const BD& st) {
 	for (int i = 0; i < count; i++)
 		if ((gruppa[i].data.day == st.day) && (gruppa[i].data.month == st.month) && (gruppa[i].data.year == st.year))
 			return i;
@@ -71,7 +74,7 @@ int Group::SearchStudent(BD st) {
 	return -1;
 }
 
-int Group::SearchStudent(unsigned long phNumber) {
+int Group::SearchStudent(const unsigned long phNumber) {
 	for (int i = 0; i < count; i++)
 		if ((gruppa[i].phNumber == phNumber))
 			return i;
@@ -79,33 +82,37 @@ int Group::SearchStudent(unsigned long phNumber) {
 	return -1;
 }
 
-void Group::AddStudent(Student nSt) {
+void Group::AddStudent(const Student& nSt) {
 	count++;
 	Student* newGroup = (Student*)realloc(gruppa, sizeof(Student) * count);
+	delete[] gruppa;
 	gruppa = newGroup;
 	gruppa[count-1] = nSt;
 }
 
-void Group::DelStudent(Student St) {
+void Group::DelStudent(const Student& St) {
 	count--;
 	int ind = SearchStudent(St.name);
 	gruppa[ind] = gruppa[count];
-	Student* newGroup = (Student*)realloc(gruppa, sizeof(Student) * count);
-	gruppa = newGroup;
+	//Student* newGroup = (Student*)realloc(gruppa, sizeof(Student) * count);  //perepisay na new delete
+	delete[] gruppa;
+	//gruppa = newGroup;
 }
 
 void Group::DelStudent(int ind) {
 	gruppa[ind] = gruppa[count];
-	Student* newGroup = (Student*)realloc(gruppa, sizeof(Student) * count);
-	gruppa = newGroup;
+	//Student* newGroup = (Student*)realloc(gruppa, sizeof(Student) * count);
+	delete[] gruppa;
+	//gruppa = newGroup;
 }
 
 istream& operator>>(std::istream& in, Group& nGrp) {
 	cout << "enter cout of student -> ";
 	int cnt;
 	in >> cnt;
-	free(nGrp.gruppa);
-	nGrp.gruppa = (Student*)malloc(sizeof(Student)*cnt);
+	if (nGrp.count != 0)
+		free(nGrp.gruppa);
+	nGrp.gruppa = new Student[cnt];
 	nGrp.count = cnt;
 	for (int i = 0; i < nGrp.count; i++) {
 		cout << "enter day of birth: day month year -> ";
@@ -115,9 +122,7 @@ istream& operator>>(std::istream& in, Group& nGrp) {
 		if (nGrp.gruppa[i].data.day > 31 || nGrp.gruppa[i].data.month > 12)
 			throw "invalid data";
 		cout << "enter FIO: name surname patronimic -> ";
-		in >> nGrp.gruppa[i].name.name;
-		in >> nGrp.gruppa[i].name.surname;
-		in >> nGrp.gruppa[i].name.patronimic;
+		in >> nGrp.gruppa[i].name;
 		cout << "enter phone number -> ";
 		in >> nGrp.gruppa[i].phNumber;
 	}
