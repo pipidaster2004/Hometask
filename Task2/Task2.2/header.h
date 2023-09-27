@@ -1,152 +1,147 @@
 #ifndef _HEAD_
 #define _HEAD_
 #include <iostream>
-#include <math.h>
+#include <stdlib.h>
 
-template <class T>
+using namespace std;
+
+
+template <typename T>
 class Vector {
 private:
-	T* vec;
-	int size;
-public:
-	Vector();
-	Vector(int size);
-	Vector(const Vector<T>& obj);
-	
-	double Lenght()const;
+    int size;      
+    T* vec;   
 
-	Vector <T> operator+(const Vector<T>& obj);
-	Vector <T> operator-(const Vector<T>& obj);
-	double operator*(const Vector<T>& obj)const;
-	bool operator==(const Vector<T>& obj)const;
-	bool operator!=(const Vector<T>& obj)const;
-	Vector<T>& operator=(const Vector<T>& obj);
-	friend std::istream& operator>>(std::istream& in, Vector<T>& vec);
-	friend std::ostream& operator<<(std::ostream& out,const Vector<T> vec);
+public:
+    Vector(int n = 0) {
+        size = n;
+        vec = new T[size];
+    }
+
+    Vector(const Vector<T>& other) {
+        size = other.size;
+        vec = new T[size];
+        for (int i = 0; i < size; i++) {
+            vec[i] = other.vec[i];
+        }
+    }
+   
+    ~Vector() {
+        delete[] vec;
+    }
+
+	double Lenght()const {
+		double res = 0;
+		for (int i = 0; i < size; i++) {
+			res += vec[i] * vec[i];
+		}
+		res = sqrt(res);
+		return res;
+	}
+
+    Vector<T> operator+(const Vector<T>& other) const {
+        if (size != other.size) {
+            throw  "Error: Cannot add vectors with different sizes";
+        }
+
+        Vector<T> result(size);
+        for (int i = 0; i < size; i++) {
+            result.vec[i] = vec[i] + other.vec[i];
+        }
+        return result;
+    }
+
+    Vector<T>operator-(const Vector<T>& other) const {
+        if (size != other.size) {
+            throw  "Error: Cannot add vectors with different sizes";
+        }
+        Vector<T> result(size);
+        for (int i = 0; i < size; i++) {
+            result.vec[i] = vec[i] - other.vec[i];
+        }
+        return result;
+    }
+
+	double operator*(const Vector<T>& obj)const {
+		double res = 0;
+		if (size != obj.size)
+			throw;
+		for (int i = 0; i < size; i++) {
+			res += vec[i] * obj.vec[i];
+		}
+		return res;
+	}
+
+
+	bool operator==(const Vector<T>& obj)const {
+		int flag = 0;
+		if (size != obj.size)
+			throw;
+		for (int i = 0; i < size; i++) {
+			if (vec[i] != obj.vec[i]) {
+				flag++;
+				break;
+			}
+		}
+		if (flag == 0)
+			return true;
+		return false;
+	}
+
+	bool operator!=(const Vector<T>& obj)const {
+		return !(this == obj);
+	}
+
+	Vector<T>& operator=(const Vector<T>& obj) {
+		if (this == obj)
+			return this;
+		if (size != obj.size) {
+			delete[] vec;
+			size = obj.size;
+			vec = new T[size];
+		}
+		for (int i = 0; 0 < size; i++) {
+			vec[i] = obj.vec[i];
+		}
+		return (*this);
+	}
+
+    int getSize() const {
+        return size;
+    }
+
+    T getElement(int index) const {
+        return vec[index];
+    }
+
+    void setElement(int index, const T& value) {
+        vec[index] = value;
+    }
+
+
+    template <typename U>
+    friend ostream& operator<<(ostream& os, const Vector<U>& vec);
+
+    template <typename U>
+    friend istream& operator>>(istream& is, Vector<U>& vec);
 };
 
-template <class T>
-Vector<T>::Vector(const Vector<T>& obj) {
-	size = obj.size;
-	vec = new T[size];
-	for (int i = 0; i < size; i++) {
-		vec[i] = obj.vec[i];
-	}
-}
 
-template <class T>
-Vector<T>::Vector(int size) {
-	this->size = size;
-	vec = new T[size];
-}
-
-template <class T>
-Vector<T>::Vector() {
-	vec = nullptr;
-	size = 0;
-}
-
-template <class T>
-double Vector<T>::Lenght()const {
-	double res = 0;
-	for (int i = 0; i < size; i++) {
-		res += vec[i] * vec[i];
-	}
-	res = sqrt(res);
-	return res;
-}
-
-template <class T>
-Vector <T> Vector<T>::operator+(const Vector<T>& obj) {
-	if (size != obj.size) {
-		throw;
-	}
-	for (int i = 0; i < size; i++) {
-		vec[i] += obj.vec[i];
-		}
-	return *this;
-}
-
-template <class T>
-Vector <T> Vector<T>::operator-(const Vector<T>& obj) {
-	if (size != obj.size) {
-		throw;
-	}
-	for (int i = 0; i < size; i++) {
-		vec[i] -= obj.vec[i];
-	}
-	return *this;
-}
-
-template <class T>
-double Vector<T>::operator*(const Vector<T>& obj)const {
-	double res = 0;
-	if (size != obj.size)
-		throw;
-	for (int i = 0; i < size; i++) {
-		res += vec[i] * obj.vec[i];
-	}
-	return res;
-}
-
-template <class T>
-bool Vector<T>::operator==(const Vector<T>& obj)const {
-	int flag = 0;
-	if (size != obj.size)
-		throw;
-	for (int i = 0; i < size; i++) {
-		if (vec[i] != obj.vec[i]) {
-			flag++;
-			break;
-		}
-	}
-	if (flag == 0)
-		return true;
-	return false;
-}
-
-template <class T>
-bool Vector<T>::operator!=(const Vector<T>& obj)const {
-	return !(this == obj);
-}
-
-template <class T>
-Vector<T>& Vector<T>::operator=(const Vector<T>& obj) {
-	if (this == obj)
-		return this;
-	if (size != obj.size) {
-		delete[] vec;
-		size = obj.size;
-		vec = new T[size];
-	}
-	for (int i = 0; 0 < size; i++) {
-		vec[i] = obj.vec[i];
-	}
-	return (*this);
+template <typename T>
+ostream& operator<<(ostream& os, const Vector<T>& vec) {
+    for (int i = 0; i < vec.getSize(); i++) {
+        os << vec.getElement(i) << " ";
+    }
+    return os;
 }
 
 
-template <class T>
-std::istream& operator>>(std::istream& in, Vector<T>& vec) {
-	//std::cout << "size = ";
-	in >> vec.size;
-	delete[] vec.vec;
-	//std::cout << std::endl;
-	vec.vec = new T[vec.size];
-	for (int i = 0; i < vec.size; i++) {
-		//std::cout << "vec[" << i << "] = ";
-		in >> vec.vec[i];
-		//std::cout << std::endl;
-	}
-	return in;
-}
-
-template <class T>
-std::ostream& operator<<(std::ostream& out, const Vector<T> vec) {
-	out << "size = " << vec.size << std::endl;
-	for (int i = 0; i < vec.size; i++) {
-		out << "vec[" << i << "] = " << vec.vec[i] << std::endl;
-	}
-	return out;
+template <typename T>
+istream& operator>>(istream& is, Vector<T>& vec) {
+    cout << "Input vector ";
+    for (int i = 0; i < vec.getSize(); i++) {
+        is >> vec.vec[i];
+    }
+    return is;
 }
 #endif
