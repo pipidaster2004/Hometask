@@ -7,25 +7,17 @@
 using namespace std;
 
 struct FIO {
-	//char name[256];
-	//char surname[256];
-	//char patronimic[256];
 	string name;
 	string surname;
 	string patronimic;
-	friend std::istream& operator>>(std::istream& in, FIO& fio)
-	{
-		in >> fio.name;
-		in >> fio.surname;
-		in >> fio.patronimic;
-		return in;
-	};
+	friend std::istream& operator>>(std::istream& in, FIO& fio);
 };
 
 struct BD {
 	int day;
 	int month;
 	int year;
+	friend std::istream& operator>>(std::istream& in, BD& data);
 };
 
 struct Student {
@@ -33,6 +25,7 @@ struct Student {
 	BD data;
 	unsigned long phNumber;
 	const Student& operator=(const Student& nSt);
+	friend std::istream& operator>>(std::istream& in, Student& nSt);
 };
 
 class Group {

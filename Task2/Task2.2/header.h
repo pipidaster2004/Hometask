@@ -42,6 +42,7 @@ Vector<T>::Vector(int size) {
 
 template <class T>
 Vector<T>::Vector() {
+	vec = nullptr;
 	size = 0;
 }
 
@@ -129,6 +130,7 @@ template <class T>
 std::istream& operator>>(std::istream& in, Vector<T>& vec) {
 	//std::cout << "size = ";
 	in >> vec.size;
+	delete[] vec.vec;
 	//std::cout << std::endl;
 	vec.vec = new T[vec.size];
 	for (int i = 0; i < vec.size; i++) {

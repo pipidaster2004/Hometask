@@ -4,14 +4,19 @@
 using namespace std;
 
 int main() {
-	/*Student A;
+	Student A;
 	A.name.name = "abc";
 	A.name.surname = "cba";
 	A.name.patronimic = "123";
 	Student B = A;
-	cout << B.name.name << " " << B.name.surname << " " << B.name.patronimic << endl;*/
+	cout << B.name.name << " " << B.name.surname << " " << B.name.patronimic << endl;
 	Group C;
 	cin >> C;
-
+	Student qwe;
+	cin >> qwe;
+	C.AddStudent(qwe);
+	cout << C;
+	C.DelStudent(A);
+	cout << C;
 	return 0;
 }
